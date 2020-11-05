@@ -1,0 +1,126 @@
+<style>
+body {
+  transition: background-color .5s;
+}
+
+a {
+  color: hotpink;
+}
+
+.row {
+    padding-bottom: 5%;
+}
+
+.col-md-4 {
+    padding-bottom: 2%;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+</head>
+
+
+
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+<title>Store Page</title>
+
+<h1>Items</h1>
+
+<body>
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+{% for item in item %}
+        {% for category in item.categories.all %}
+        <a href="{% url 'storefront_category' category.name %}">
+        {{ category.name }}
+        </a>
+        {% endfor %}
+	{% endfor %}
+</div>
+
+<div id="main">
+  <h2>Sorting By Category</h2>
+  <p>This page contains all items available in the store. However, if you wish to sort by category, click the button below to open the list of categories.</p>
+  <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+</div>
+
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+  document.body.style.backgroundColor = "white";
+}
+</script>
+   
+</body>
+
+
+<div class="row">
+{% for item in item %}
+    <div class="col-md-4">
+        <div class="card mb-2 p-3 h-100">
+            <img class="card-img-top" src="{% static item.image %}">
+            <div class="card-body">
+                <h5 class="card-title">{{ item.item }}</h5>
+                <p class="card-text">${{ item.price }}</p>
+                <a href="{% url 'storefront_detail' item.pk %}"
+                   class="btn btn-primary">
+                    More
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

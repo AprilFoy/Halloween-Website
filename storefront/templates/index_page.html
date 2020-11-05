@@ -1,0 +1,80 @@
+<style>
+.center-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 50vh;
+}
+</style>
+
+
+
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+<title>Happy Halloween!</title>
+<br>
+
+<h1 class="text-center">Have a SPOOOOOOKY Halloween!</h1>
+
+<h2 class="text-center">Welcome to the Halloween Store! Preview a selection of items from the carousel below, or click the Store button to view all items.</h2>
+
+<br>
+
+
+<style>
+  /* Make the image fully responsive */
+  .carousel-inner img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+  .carousel-control-prev-icon {
+ background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+}
+</style>
+
+
+</head>
+<body>
+
+<div id="demo" class="carousel slide" data-ride="carousel">
+
+  
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+  {% for item in item %}
+  {% if forloop.counter == 1 %}
+  <div class="carousel-item active">
+  {% else %}
+  <div class="carousel-item">
+  {% endif %}
+      <img src="{% static item.image %}">
+      <div class="carousel-caption text-light bg-dark">
+        <h3>{{ item.item }}</h3>
+        <p>{{ item.description }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>
+
+</body>
+
+
+{% endblock %}

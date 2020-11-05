@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+<title>User Dashboard</title>
+<br>
+<h3>Hello, {{ user.username|default:'Guest' }}!</h3>
+
+<br>
+
+<div class="text-center">
+    {% if user.is_authenticated %}
+        <h3>User Information:</h3>
+<br>
+	<h3>First name: {{ user.first_name|default:'Guest' }}</h3>
+<br>
+	<h3>Last name: {{ user.last_name|default:'Guest' }}</h3>
+<br>
+	<h3>E-mail: {{ user.email|default:'None' }}</h3>
+    {% else %}
+        <h3>To view your user information, please log in.</h3>
+    {% endif %}
+</div>
+<div>
+    {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}">Logout</a><br>
+	<a href="{% url 'password_change' %}">Change password</a>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+</div>
+{% endblock %}
